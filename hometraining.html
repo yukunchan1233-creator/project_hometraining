@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>26기 유근찬 - 개인프로젝트 (슬라이드)</title>
+  <style>
+    body { margin:0; font-family: Arial, sans-serif; background:#0b0f1a; color:#fff; }
+    header { padding:14px 18px; background:#0f172a; border-bottom:1px solid rgba(255,255,255,0.1); }
+    header h1 { margin:0; font-size:16px; font-weight:700; }
+    .wrap { display:flex; gap:14px; padding:14px; }
+    .thumbs {
+      width:260px; max-height: calc(100vh - 80px);
+      overflow:auto; background:#0f172a;
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:12px; padding:10px;
+    }
+    .thumbs button {
+      width:100%; border:0; background:transparent; padding:6px; cursor:pointer;
+      border-radius:10px; display:flex; align-items:center; gap:10px; color:#cbd5e1;
+    }
+    .thumbs button:hover { background:rgba(255,255,255,0.06); }
+    .thumbs img {
+      width:72px; height:auto; border-radius:8px;
+      border:1px solid rgba(255,255,255,0.12);
+    }
+    .viewer {
+      flex:1;
+      background:#0f172a;
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:12px;
+      padding:12px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      min-height: calc(100vh - 80px);
+    }
+    .viewer img {
+      max-width:100%;
+      max-height: calc(100vh - 170px);
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.12);
+      background:#111827;
+    }
+    .controls {
+      margin-top:10px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    }
+    .controls button {
+      padding:10px 14px; border-radius:10px;
+      border:1px solid rgba(255,255,255,0.15);
+      background:#111827; color:#fff; cursor:pointer;
+    }
+    .controls button:hover { background:#1f2937; }
+    .counter { color:#cbd5e1; font-size:14px; }
+    .hint { color:#94a3b8; font-size:12px; margin-top:6px; }
+  </style>
+</head>
+
+<body>
+<header>
+  <h1>26기 유근찬 - 개인프로젝트 (이미지 슬라이드)</h1>
+</header>
+
+<div class="wrap">
+  <div class="thumbs" id="thumbs"></div>
+
+  <div class="viewer">
+    <img id="mainImg" alt="slide" />
+    <div class="controls">
+      <button onclick="prev()">◀ 이전</button>
+      <button onclick="next()">다음 ▶</button>
+      <span class="counter" id="counter"></span>
+    </div>
+    <div class="hint">키보드 ← → 로도 넘길 수 있음</div>
+  </div>
+</div>
+
+<script>
+  // ✅ 네 폴더 파일명 그대로 적음 (slide (1).JPG 형태)
+  const slides = Array.from({length:16}, (_,i)=>`slide (${i+1}).JPG`);
+
+  let idx = 0;
+  const mainImg = document.getElementById("mainImg");
+  const counter = document.getElementById("counter");
+  const thumbs = document.getElementById("thumbs");
+
+  function load(i){
+    idx = (i + slides.length) % slides.length;
+    // 공백/괄호 있는 파일명도 안전하게 처리
+    mainImg.src = encodeURI(slides[idx]);
+    counter.textContent = `${idx+1} / ${slides.length}`;
+    highlightThumb();
+  }
+
+  function prev(){ load(idx-1); }
+  function next(){ load(idx+1); }
+
+  function buildThumbs(){
+    slides.forEach((name, i) => {
+      const btn = document.createElement("button");
+      btn.onclick = () => load(i);
+
+      const img = document.createElement("img");
+      img.src = encodeURI(name);
+      img.alt = `thumb ${i+1}`;
+
+      const label = document.createElement("div");
+      label.textContent = `slide ${i+1}`;
+      label.style.fontSize = "13px";
+
+      btn.appendChild(img);
+      btn.appendChild(label);
+      thumbs.appendChild(btn);
+    });
+  }
+
+  function highlightThumb(){
+    const buttons = thumbs.querySelectorAll("button");
+    buttons.forEach((b, i) => {
+      b.style.background = (i===idx) ? "rgba(255,255,255,0.08)" : "transparent";
+      b.style.color = (i===idx) ? "#fff" : "#cbd5e1";
+    });
+  }
+
+  window.addEventListener("keydown", (e)=>{
+    if(e.key==="ArrowLeft") prev();
+    if(e.key==="ArrowRight") next();
+  });
+
+  buildThumbs();
+  load(0);
+</script>
+
+</body>
+</html>
