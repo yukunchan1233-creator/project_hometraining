@@ -1,0 +1,87 @@
+# ===== OS / Editor =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+.vscode/
+.idea/
+*.iml
+
+# ===== Eclipse / STS =====
+.metadata/
+.recommenders/
+.settings/
+.project
+.classpath
+.factorypath
+.springBeans
+.apt_generated/
+bin/
+
+# ===== Java build output =====
+target/
+build/
+out/
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
+
+# ===== Logs =====
+*.log
+logs/
+log/
+
+# ===== Maven / Gradle =====
+# (wrapper는 보통 커밋하지만, 캐시는 제외)
+.gradle/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# ===== Node (프론트 섞일 때) =====
+node_modules/
+dist/
+.cache/
+
+# ===== Tomcat / Server (Eclipse Servers) =====
+Servers/
+.server/
+wtpwebapps/
+tmp/
+work/
+*.tmp
+
+# ===== Upload / Runtime Generated Files =====
+# 프로젝트에서 C:/upload 같은 업로드 폴더를 webapp 아래로 쓸 때 자주 생김
+**/upload/
+**/uploads/
+**/files/
+**/data/
+
+# ===== Env / Secrets =====
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+*.jks
+*.keystore
+
+# ===== DB / Local config =====
+*.db
+*.sqlite
+*.sqlite3
+*.local
+application-local.properties
+application-dev.properties
+
+# ===== Mac/Linux temp =====
+*~
+*.swp
+*.swo
+
+# WEB-INF/classes 는 보통 빌드 산출물 (커밋 금지)
+src/main/webapp/WEB-INF/classes/
+
